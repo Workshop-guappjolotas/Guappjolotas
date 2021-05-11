@@ -20,10 +20,8 @@ const ProductoId = () => {
          const obtenerDatos = async () => {
              const data = await fetch(`https://guappjolotas.herokuapp.com/inventario`)
              const users = await data.json()
-             console.log(users)
              users.forEach(element => {
                 if(element.idArticulo == id){
-                    console.log(element)
                     setPueblo(element) 
                 } 
              });

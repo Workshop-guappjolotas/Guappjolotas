@@ -23,7 +23,7 @@ export default class Header extends Component {
     render() {
         return (
             <>
-            { console.log(`http://localhost:3004/${this.props}`)}
+            
             <Navbar>
                 <div><ImgLogo src="https://i.ibb.co/vHRHSrx/Ilustracio-n-sin-ti-tulo-66-1.png" alt="" /></div>
                 <ImgCarrito><i className="fas fa-cart-plus"></i></ImgCarrito>
