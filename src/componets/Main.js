@@ -19,7 +19,8 @@ export default class Main extends Component {
     render() {
         return (
             <>
-               <Producto/>
+{/*     style={{display: { this.state.verBusqueda ? 'block' : 'none'} }} */}
+                {this.state.verBusqueda ? null: <Producto/> }
                <Buscar ocultarCategorias = {this.ocultarCategorias }/> 
               {
                this.state.verBusqueda ?null: <Categorias/> 

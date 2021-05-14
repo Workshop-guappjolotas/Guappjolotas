@@ -1,20 +1,45 @@
 import React, {useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import { Link } from "react-router-dom";
+import Carrito from '../componets/Carrito';
 import Header from '../componets/Header';
+import {useCounter} from '../hook/useCounter'
 const ProductoId = () => {
-    const {id} = useParams()  // recibie los parametros de la url
+    let storage =[]
+    if (localStorage.getItem('storage')) {
+        storage = JSON.parse(localStorage.getItem('storage'))
+    }
+    const {id} = useParams()  // recibios los parametros de la url     
+    const {state,incremento, decremento} = useCounter(3)
 
      const [pueblo , setPueblo ] = useState([])
-     
-     const [numero, setNumero] = useState(1);
-     const aumentar = () =>{
-         setNumero( numero +1  )
-     }
-     const restar = () =>{
-        setNumero( numero -1  )
-    }
+     const [verItemCart , setItemCart  ] = useState(false)
+    const agregarAlCarrito = () => {
+        console.log("hola")
+            const producto = pueblo
+            producto.cantidad = state
+        
+            /*si el product esta en el carrito guardamos su posicion y el elemento */
+            let indice =null;
+            let elemento= null;
+            storage.forEach((element, index) => {
+                if (element.idArticulo == producto.idArticulo) {
+                    indice = index;
+                    elemento = element
+                    return
+                }
+            });
+    
+            /**Agregando al carrito modificando cantidad*/
+           if (elemento) {
+                storage[indice].cantidad = producto.cantidad
+               localStorage.setItem('storage', JSON.stringify(storage)) 
+            } else {
+                storage.push(producto)
+                localStorage.setItem('storage', JSON.stringify(storage)) 
+            }
 
+    }
      useEffect(() => {
          // consumir api
          const obtenerDatos = async () => {
@@ -26,12 +51,13 @@ const ProductoId = () => {
                 } 
              });
            
-             // metodo chanbon pregunto si hay eror en el mensaje para no mostrar nada
+             // eerroor
              
          }
          
           obtenerDatos() 
-     }, [id])  // ponemos el id para no lanze adventencia de que se le perdio el id
+         
+     }, [id])  
  
    
     return (
@@ -39,13 +65,14 @@ const ProductoId = () => {
         <>
             <Header/>
             <Link to={'/'}  className="btn btn-danger"> Volver</Link> 
+            { !verItemCart && <>
            <div><img src={pueblo.foto} alt="" /></div>
            <div>{pueblo.tipo} </div>
            <div>{pueblo.precio} </div>
            <div>
-                <i className="fas fa-plus" onClick={aumentar}></i>
-                <p>{numero}</p>
-                <i className="fas fa-minus" onClick={restar}></i>
+                <i className="fas fa-plus" onClick={incremento}></i>
+                <p>{state}</p>
+                <i className="fas fa-minus" onClick={decremento}></i>
            </div>
            <div>
                Sabor
@@ -76,6 +103,16 @@ const ProductoId = () => {
 
                </div>
            </div>
+           <div>
+               <button style={{background:'red',padding:'20px' }} onClick={() => {
+                   agregarAlCarrito()
+                   setItemCart(true)
+               }
+            }>Agregar al carrito</button>
+           </div>
+           </>
+                }
+              { verItemCart && <Carrito/> }  
         </>
     )
 }

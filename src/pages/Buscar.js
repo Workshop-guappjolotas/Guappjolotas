@@ -33,6 +33,7 @@ const CardDescription = styled.div`
 
 `;
 
+
 const Buscar = ({ocultarCategorias}) => {
     
 const [text, setText] = useState('')
