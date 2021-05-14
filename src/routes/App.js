@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from '../containers/Home';
 import Header from '../componets/Header';
 import ProductoId from '../pages/ProductoId';
+import Checkout from '../componets/Checkout';
 
 function App({ Component }) {
 
@@ -14,6 +15,7 @@ function App({ Component }) {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/producto/:id"> <ProductoId/> </Route>
+        <Route path="/checkout" component={Checkout}/>
       </Switch>
       </BrowserRouter> 
  </>

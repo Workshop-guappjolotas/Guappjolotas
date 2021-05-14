@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { Link } from "react-router-dom";
 import Header from '../componets/Header';
 const ProductoId = () => {
-    const {id} = useParams()  // recibios los parametros de la url
+    const {id} = useParams()  // recibie los parametros de la url
 
      const [pueblo , setPueblo ] = useState([])
      
