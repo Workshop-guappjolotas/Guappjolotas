@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import {loadStripe} from '@stripe/react-stripe-js'
-
-//const stripePromise = loadStripe("pk_test_51Ir33FKWYFkfmdxX41vVDyEWTu15gNvgHzinI06kSwNX1bgrmANgRnuJSCvIiBhsoPxBrUJaGQYi2RGAqK6DOP4s00SIUCfB8E")
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 const Contenedor = styled.div`
     width:100%;
@@ -36,7 +35,6 @@ const Label = styled.label`
     color:black;
     float:left;
 `
-
 const Div = styled.div`
     width:100%;    
     input{
@@ -48,7 +46,6 @@ const Div = styled.div`
         box-sizing:border-box;
     }
 `
-
 const Button = styled.button`
     width:90%;
     align-self:flex-end;
@@ -57,11 +54,57 @@ const Button = styled.button`
     margin:20px;
 `
 
+const stripePromise = loadStripe("pk_test_51Ir33FKWYFkfmdxX41vVDyEWTu15gNvgHzinI06kSwNX1bgrmANgRnuJSCvIiBhsoPxBrUJaGQYi2RGAqK6DOP4s00SIUCfB8E")
+
+const CheckoutForm = () => {
+
+    const stripe = useStripe()
+    const elements = useElements()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: elements.getElement(CardElement)
+        });
+        if(!error){
+            console.log(paymentMethod)
+        }else{
+            console.log(error)
+        }
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="card card-body">
+            <img src={"https://i.ibb.co/vHRHSrx/Ilustracio-n-sin-ti-tulo-66-1.png"} className="img-fluid"/>
+            <div className="form-group">
+                <CardElement className="form-control"/>
+            </div>
+            <button className="btn btn-success">
+                Pagar
+            </button>
+        </form>
+    )
+}
 export default class Checkout extends Component {
     render() {
         return (
             <>
-            <Contenedor className="container">
+                <Elements stripe={stripePromise}>
+                    <div className="container p-4">
+                        <div className="row">
+                            <div className="col-md-4 offset-md-4">
+                                <CheckoutForm>
+                                    <CardElement />
+                                </CheckoutForm>
+                            </div>
+                        </div>
+                    </div>
+                </Elements>
+
+                {/* <Contenedor className="container">
+
+                
                 <Formulario>
                     <Label>Email</Label>
                     <Input type="email" />
@@ -77,11 +120,9 @@ export default class Checkout extends Component {
                     <Input type="" />
                     <Input type="number" max="9999999" min="1000" placeholder="Código Postal" />
                 </Formulario>
-
-                
             <Button className="btn btn-danger">Pagar</Button>
-            </Contenedor>
-            
+             
+            </Contenedor>*/}
             </>
         )
     }
