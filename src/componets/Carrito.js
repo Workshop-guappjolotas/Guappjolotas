@@ -1,15 +1,18 @@
 import React from 'react'
-let storage = []
+
+const Carrito = () => {
+    let storage = []
 if (localStorage.getItem('storage')) {
     storage = JSON.parse(localStorage.getItem('storage'))
 }
-const Carrito = () => {
     return (
         <>
             <div>
                 <div> <i className="fas fa-arrow-left"></i> </div>
                 <div>Carrito</div>
+               
                 {
+               
                     storage.map(item =>
                     (
                         
