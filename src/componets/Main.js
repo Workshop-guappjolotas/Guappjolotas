@@ -16,15 +16,23 @@ export default class Main extends Component {
                 verBusqueda: true,
             })
         }
+        verCategorias = () => {
+            if(this.state.verBusqueda)
+            this.setState({
+                verBusqueda: false,
+            })
+        }
     render() {
         return (
             <>
-{/*     style={{display: { this.state.verBusqueda ? 'block' : 'none'} }} */}
-                {this.state.verBusqueda ? null: <Producto/> }
-               <Buscar ocultarCategorias = {this.ocultarCategorias }/> 
-              {
-               this.state.verBusqueda ?null: <Categorias/> 
-              }
+            {!this.state.verBusqueda && <Producto/> }
+               <Buscar 
+               ocultarCategorias = {this.ocultarCategorias} 
+               verCategorias = {this.verCategorias }
+               verCancelar = {this.state.verBusqueda} 
+            /> 
+            
+            {!this.state.verBusqueda && <Categorias/> }
             </>
         )
     }

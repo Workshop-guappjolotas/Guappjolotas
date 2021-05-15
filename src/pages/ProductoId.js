@@ -4,6 +4,36 @@ import { Link } from "react-router-dom";
 import Carrito from '../componets/Carrito';
 import Header from '../componets/Header';
 import {useCounter} from '../hook/useCounter'
+import {CountStyled} from '../styled/ElementStyled'
+import styled from 'styled-components';
+
+
+const ContainerGuajolocombo = styled.div`
+
+`
+const GuajolocomboTitle = styled.h2`  
+margin-bottom: 0;
+` 
+const ContanierCardGuajolocombo = styled.div`
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-gap: 15px;
+`
+const CardGuajolocombo = styled.div`
+background:#fff;
+border-radius:20px;
+padding: 10px;
+`
+const ContainerCheckbox = styled.div`
+text-align:end;
+` 
+const TipoGuajolocombo = styled.h2`
+margin: 4px;
+` 
+const PrecioGuajolocombo = styled.p`
+color:#FA4A0C;
+
+` 
 const ProductoId = () => {
     let storage =[]
     if (localStorage.getItem('storage')) {
@@ -69,40 +99,41 @@ const ProductoId = () => {
            <div><img src={pueblo.foto} alt="" /></div>
            <div>{pueblo.tipo} </div>
            <div>{pueblo.precio} </div>
-           <div>
-                <i className="fas fa-plus" onClick={incremento}></i>
+           <div style={{display:'flex'}}>
+               <CountStyled>
+                <i className="fas fa-plus-circle" onClick={incremento}></i>
                 <p>{state}</p>
-                <i className="fas fa-minus" onClick={decremento}></i>
+                <i className="fas fa-minus-circle" onClick={decremento}></i>
+               </CountStyled>
            </div>
            <div>
                Sabor
            </div>
            {/*  */}
-           <div>
+           <ContainerGuajolocombo>
                <div>
-
-               <h2>Guajolocombo</h2>
-           <p>Selecciona la bebida que más te guste y disfruta de tu desayuno</p>
+                 <GuajolocomboTitle>Guajolocombo</GuajolocomboTitle>
+                 <p>Selecciona la bebida que más te guste y disfruta de tu desayuno</p>
                </div>
                
-               
-                <div className="cc">
-                    <div>
-                        <div>boton</div>
-                        <div>Foto</div>
-                        <div>Chapurrano</div>
-                        <div>precio</div>
-                    </div>
-                    {/*  */}
-                    <div>
-                        <div>boton</div>
-                        <div>Foto</div>
-                        <div>Atole de Arroz</div>
-                        <div>precio + $12 MXN</div>
-                    </div>
-
-               </div>
-           </div>
+                <ContanierCardGuajolocombo>
+                
+                    <CardGuajolocombo>
+                        <ContainerCheckbox> 
+                        <input type="checkbox" />
+                        </ContainerCheckbox>
+                        <div>
+                        <img src="https://i.ibb.co/ZVM2MTH/tamal-mole.png" alt="" width="100px"/>
+                        </div>
+                        <div> 
+                            <TipoGuajolocombo> Verde</TipoGuajolocombo>
+                        <PrecioGuajolocombo>+ $25 MXN</PrecioGuajolocombo>
+                         </div>
+                    </CardGuajolocombo>
+                
+            
+               </ContanierCardGuajolocombo>
+           </ContainerGuajolocombo>
            <div>
                <button style={{background:'red',padding:'20px' }} onClick={() => {
                    agregarAlCarrito()
