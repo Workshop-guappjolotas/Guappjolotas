@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'; 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from '../containers/Home';
-import Header from '../componets/Header';
 import ProductoId from '../pages/ProductoId';
 import Checkout from '../componets/Checkout';
 
