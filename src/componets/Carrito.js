@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from "react-router-dom";
-
 const Carrito = () => {
     let storage = []
 if (localStorage.getItem('storage')) {
@@ -9,7 +8,7 @@ if (localStorage.getItem('storage')) {
     return (
         <>
             <div>
-                <div> <i className="fas fa-arrow-left"></i> </div>
+            <Link to={"/"} className="fas fa-arrow-left"></Link>
                 <div>Carrito</div>
                
                 {

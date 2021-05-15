@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import axios from 'axios'
-import {useState} from 'react'
+import { useState } from 'react'
+import { Link } from "react-router-dom";
 
+let total = 12;
 const stripePromise = loadStripe("pk_test_51Ir33FKWYFkfmdxX41vVDyEWTu15gNvgHzinI06kSwNX1bgrmANgRnuJSCvIiBhsoPxBrUJaGQYi2RGAqK6DOP4s00SIUCfB8E")
 
 const CheckoutForm = () => {
@@ -26,7 +28,7 @@ const CheckoutForm = () => {
             try {
                 const { data } = await axios.post('http://localhost:3001/api/checkout', {
                     id,
-                    amount: 100000
+                    amount: total * 100
                 })
                 console.log(data)
             } catch (error) {
@@ -38,9 +40,12 @@ const CheckoutForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className="card card-body">
-            <img src={"https://i.ibb.co/vHRHSrx/Ilustracio-n-sin-ti-tulo-66-1.png"} className="img-fluid" />
+
+            <Link to={"/carrito"} className="fas fa-arrow-left"></Link>
+
+            <center><img width="130px" src={"https://i.ibb.co/vHRHSrx/Ilustracio-n-sin-ti-tulo-66-1.png"} className="img-fluid"/></center>
             <div className="form-group">
-                <center className="text-center my-2">Total: $20.000</center>
+                <center className="text-center my-2">Total: {total}</center>
                 <CardElement className="form-control" />
             </div>
             <button className="btn btn-success" disabled={!stripe}>
