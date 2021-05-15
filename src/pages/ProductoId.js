@@ -5,6 +5,10 @@ import Carrito from '../componets/Carrito';
 import Header from '../componets/Header';
 import {useCounter} from '../hook/useCounter'
 import {CountStyled} from '../styled/ElementStyled'
+import {MainStyled} from '../styled/ElementStyled'
+import {TitleStyled} from '../styled/ElementStyled'
+import {PriceStyled} from '../styled/ElementStyled'
+
 import styled from 'styled-components';
 
 
@@ -78,6 +82,7 @@ const ProductoId = () => {
              users.forEach(element => {
                 if(element.idArticulo == id){
                     setPueblo(element) 
+                    
                 } 
              });
            
@@ -93,17 +98,22 @@ const ProductoId = () => {
     return (
         
         <>
+            
             <Header/>
-            <Link to={'/'}  className="btn btn-danger"> Volver</Link> 
+            <Link to={'/'}  className="btn btn-danger"> <img src="https://i.ibb.co/dL97VtP/Vector-2.png"/> </Link> 
             { !verItemCart && <>
-           <div><img src={pueblo.foto} alt="" /></div>
-           <div>{pueblo.tipo} </div>
-           <div>{pueblo.precio} </div>
+            <div style={{}}>
+            <div ><img src={pueblo.foto} style={{width: '100px', textAlign:'right'}} alt="" /></div>
+           <div style={{textAlign:'center'}}><img src={pueblo.foto} alt="" onClick={()=>{console.log(pueblo);}}/></div>
+           <div ><img src={pueblo.foto} style={{width: '100px', textAlign:'right'}} alt="" /></div>
+           </div>
+           <TitleStyled>{pueblo.tipo} </TitleStyled>
+           <PriceStyled>${pueblo.precio} MXN</PriceStyled>
            <div style={{display:'flex'}}>
                <CountStyled>
-                <i className="fas fa-plus-circle" onClick={incremento}></i>
-                <p>{state}</p>
                 <i className="fas fa-minus-circle" onClick={decremento}></i>
+                <p>{state}</p>
+                <i className="fas fa-plus-circle" onClick={incremento}></i>
                </CountStyled>
            </div>
            <div>
@@ -144,6 +154,7 @@ const ProductoId = () => {
            </>
                 }
               { verItemCart && <Carrito/> }  
+              
         </>
     )
 }
