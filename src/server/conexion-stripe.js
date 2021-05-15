@@ -10,13 +10,16 @@ app.use(express.json())
 
 app.post('/api/checkout', async (req, res) => {
     try {
-        const { id, amount } = req.body
+        const { id, amount ,detallesDePago} = req.body
+
+alert(detallesDePago)
 
         const payment = await stripe.paymentIntents.create({
             amount,
             currency: 'MXN',
             description: "Compra de Guajolotas",
             payment_method: id,
+            billing_details:detallesDePago,
             confirm: true
         })
 
