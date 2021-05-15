@@ -1,39 +1,23 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
+import {MenuCategoriaStyled,CardStyled, CardFotoStyled, StyledCardImg,CardDescriptionStyled
+,CardTipoStyled, CardPecioStyled,ContainerCardsStyled } from '../styled/ElementStyled' 
 
 //INICIO DE NUESTROS ESTILOS CONSTYLED-COMPONENTS
+const CategoriaActiva = styled.div`
+    border-bottom: ${(props) => props.border};
+    padding: 0 5px;
+    cursor: pointer;
+    `
 
-const MenuCategorias = styled.div`
-display: flex;
-justify-content: space-between;
-margin: 30px 0 30px 0;
-font-size: 20px;
-`;
-
-const Card = styled.div`
-display: flex;
-border-radius: 10px;
-margin-top: 10px;
-`;
-
-const CardFoto = styled.div`
-display: flex;
-padding-right: 5px;
-`;
-const CardImg = styled.img`
-width: 80px;
-`;
-const CardDescription = styled.div`
-
-`;
 export default class Categorias extends Component {
     constructor() {
         super();
         this.state = {
-            seasons: ["primavera", "verano", "otoño"],
             productos: [],
-            categoria: "Tamal"
+            categoria: "Tamal",
+            active:1
         }
     }
 
@@ -59,29 +43,30 @@ export default class Categorias extends Component {
     render() {
         return (
             <>
-                <MenuCategorias>
-                    <div onClick={() => this.setState({ categoria: 'Guajolota' })}>Guajolotas</div>
-                    <div onClick={() => this.setState({ categoria: 'Bebida' })}>Bebidas</div>
-                    <div onClick={() => this.setState({ categoria: 'Tamal' })}>Tamales</div>
-                </MenuCategorias>
-                <div>
+                <MenuCategoriaStyled>
+                    <CategoriaActiva border={this.state.active==1? "3px solid red":'none'} onClick={() => this.setState({ categoria: 'Guajolota' ,active:1 })}>Guajolotas</CategoriaActiva>
+                    <CategoriaActiva border={this.state.active==2? "3px solid red":'none'} onClick={() => this.setState({ categoria: 'Bebida', active:2  })}>Bebidas</CategoriaActiva>
+                    <CategoriaActiva border={this.state.active==3? "3px solid red":'none'} onClick={() => this.setState({ categoria: 'Tamal', active:3  })}>Tamales</CategoriaActiva>
+                </MenuCategoriaStyled>
+                
+                <ContainerCardsStyled>
                     {
                         this.state.productos.filter(item => item.categoria === this.state.categoria)
                             .map(item =>
                             (
-                                <Link to={`/producto/${item.id}`} key={item.id} >
-                                    <Card>
-                                        <CardFoto><CardImg src={item.foto} alt="" /></CardFoto>
-                                        <CardDescription>
-                                            <div>{item.tipo}</div>
-                                            <div>${item.precio} MXN</div>
-                                        </CardDescription>
+                                <Link to={`/producto/${item.id}`} key={item.id} style={{textDecoration:'none'}}>
+                                    <CardStyled>
+                                        <CardFotoStyled><StyledCardImg src={item.foto} alt="" /></CardFotoStyled>
+                                        <CardDescriptionStyled>
+                                            <CardTipoStyled>{item.tipo}</CardTipoStyled>
+                                            <CardPecioStyled>${item.precio} MXN</CardPecioStyled>
+                                        </CardDescriptionStyled>
 
-                                    </Card>
+                                    </CardStyled>
                                 </Link>
                             ))
                     }
-                </div>
+                </ContainerCardsStyled>
             </>
         )
     }
