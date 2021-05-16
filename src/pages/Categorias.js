@@ -39,6 +39,7 @@ export default class Categorias extends Component {
                     this.setState({ productos: Productos })
                 })
             })
+            
     }
     render() {
         return (
