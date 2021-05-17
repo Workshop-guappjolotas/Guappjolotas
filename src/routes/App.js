@@ -8,18 +8,18 @@ import Carrito from '../componets/Carrito'
 function App({ Component }) {
 
   return (
-      <>
-      
-       <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/producto/:id"> <ProductoId/> </Route>
-        <Route path="/checkout" component={Checkout}/>
-        <Route path="/carrito" component={Carrito}/>
-      </Switch>
-      </BrowserRouter> 
- </>
-    
+    <>
+
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/producto/:id"> <ProductoId /> </Route>
+          <Route path="/checkout" component={Checkout} />
+          <Route path="/carrito" component={Carrito} />
+        </Switch>
+      </BrowserRouter>
+    </>
+
   )
 }
 export default App;

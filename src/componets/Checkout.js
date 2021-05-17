@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Link } from "react-router-dom";
 
 {/*----------------------------------------Se trae el total de la compra----------------------------------*/ }
-let total = 12;
+let total = 50;
 
 {/*--------------------------Promesa con la API Key otorgada por Stripe-----------------------------------*/ }
 const stripePromise = loadStripe("pk_test_51Ir33FKWYFkfmdxX41vVDyEWTu15gNvgHzinI06kSwNX1bgrmANgRnuJSCvIiBhsoPxBrUJaGQYi2RGAqK6DOP4s00SIUCfB8E")
@@ -36,8 +36,7 @@ const CheckoutForm = () => {
         {/*---Acción a la espera de que se pulse el botón de submit para  recibit los datos de pago--------*/ }
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
-            card: elements.getElement(CardElement),
-            billing_details: detallesDePago
+            card: elements.getElement(CardElement)
         });
 
         {/*--- -----Determina que se está cargando la información prooporcionada a stripe------------*/ }
