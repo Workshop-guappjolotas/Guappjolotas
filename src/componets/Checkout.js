@@ -36,7 +36,8 @@ const CheckoutForm = () => {
         {/*---Acción a la espera de que se pulse el botón de submit para  recibit los datos de pago--------*/ }
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
-            card: elements.getElement(CardElement)
+            card: elements.getElement(CardElement),
+            //billing_details: "dsdsdsd"
         });
 
         {/*--- -----Determina que se está cargando la información prooporcionada a stripe------------*/ }
