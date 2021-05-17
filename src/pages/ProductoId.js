@@ -99,7 +99,7 @@ const ProductoId = () => {
              const data = await fetch(`https://guappjolotas.herokuapp.com/inventario`)
              users = await data.json()
              
-            //  console.log(index)
+              console.log(users)
              console.log(id)
              let arrayIndex = users.findIndex((element) => element.idArticulo == id)
              users.forEach(element => {
@@ -139,6 +139,7 @@ const ProductoId = () => {
             <Link to={'/'}  className="btn btn-danger"> <img src="https://i.ibb.co/dL97VtP/Vector-2.png"/> </Link> 
             { !verItemCart && <>
             <ContainerMeal>
+                {console.log("sdfsdf")}
             <Link to={`/producto/${id-1}`}><div ><img src={puebloBefore} style={{width: '100px', textAlign:'right'}} alt=""  /></div> </Link>
            <div style={{textAlign:'center'}}><img src={pueblo.foto} alt=""/></div>
            <Link to={`/producto/${id+1}`}><div ><img src={puebloNext} style={{width: '100px', textAlign:'right'}} alt="" /></div>
