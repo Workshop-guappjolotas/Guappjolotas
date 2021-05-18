@@ -40,12 +40,11 @@ const ProductoId = () => {
         storage = JSON.parse(localStorage.getItem('storage'))
     }
     const {id} = useParams()  // recibios los parametros de la url     
-    const {state,incremento, decremento} = useCounter(3)
+    const {state,incremento, decremento} = useCounter(1)
 
      const [pueblo , setPueblo ] = useState([])
      const [verItemCart , setItemCart  ] = useState(false)
     const agregarAlCarrito = () => {
-        console.log("hola")
             const producto = pueblo
             producto.cantidad = state
         

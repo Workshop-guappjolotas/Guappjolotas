@@ -25,6 +25,7 @@ export default class Main extends Component {
     render() {
         return (
             <>
+            
             {!this.state.verBusqueda && <Producto/> }
                <Buscar 
                ocultarCategorias = {this.ocultarCategorias} 
