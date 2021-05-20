@@ -131,8 +131,7 @@ const ProductoId = () => {
             <Header/>
             <Link to={'/'}  className="btn btn-danger"> <img src="https://i.ibb.co/dL97VtP/Vector-2.png"/> </Link> 
             { !verItemCart && <>
-            <ContainerMeal>
-                {console.log("sdfsdf")}
+            <ContainerMeal>}
             <Link to={`/producto/${id-1}`}><div ><img src={puebloBefore} style={{width: '100px', textAlign:'right'}} alt=""  /></div> </Link>
            <div style={{textAlign:'center'}}><img src={pueblo.foto} alt=""/></div>
            <Link to={`/producto/${id+1}`}><div ><img src={puebloNext} style={{width: '100px', textAlign:'right'}} alt="" /></div>

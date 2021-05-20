@@ -3,7 +3,8 @@ import { loadStripe } from '@stripe/stripe-js'
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import axios from 'axios'
 import { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import styled from 'styled-components'
 
 {/*----------------------------------------Se trae el total de la compra----------------------------------*/ }
 let total = 50;
@@ -13,6 +14,8 @@ const stripePromise = loadStripe("pk_test_51Ir33FKWYFkfmdxX41vVDyEWTu15gNvgHzinI
 
 {/*----------------------------------------Formulario de pago--------------------------------------------*/ }
 const CheckoutForm = () => {
+
+    const [redir, setredir] = useState(true)
 
     const stripe = useStripe()
     const elements = useElements()
@@ -37,7 +40,6 @@ const CheckoutForm = () => {
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card: elements.getElement(CardElement),
-            //billing_details: "dsdsdsd"
         });
 
         {/*--- -----Determina que se está cargando la información prooporcionada a stripe------------*/ }
@@ -46,7 +48,7 @@ const CheckoutForm = () => {
         if (!error) {
             const { id } = paymentMethod
 
-        {/*--se ennvia la información hacia un servidor simulado para confirmar el pago--------------------*/ }
+            {/*--se ennvia la información hacia un servidor simulado para confirmar el pago--------------------*/ }
             try {
                 const { data } = await axios.post('http://localhost:3001/api/checkout', {
                     id,
@@ -57,6 +59,10 @@ const CheckoutForm = () => {
                 console.log(error)
             }
             setLoading(false)
+            
+            if (redir) {
+                return <Redirect to="/" />;
+            }
         }
     }
 
@@ -70,7 +76,7 @@ const CheckoutForm = () => {
 
             {/* ----------------------------Grupo de inputs--------------------------------- */}
             <div className="form-group">
-                <br/>
+                <br />
 
                 {/* ----------------------------------Input nombre----------------------------------- */}
                 <input id="nombre" className="form-control" type="text" placeholder="Nombre completo" onChange={(e) => {

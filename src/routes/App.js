@@ -7,6 +7,7 @@ import Checkout from '../componets/Checkout';
 import Carrito from '../componets/Carrito'
 import Registration from '../componets/Registration';
 import Loading from '../pages/Loading'
+import Pagado from '../componets/Pagado';
 
 function App({ Component }) {
   const [state, setstate] = useState(true)
@@ -23,6 +24,7 @@ function App({ Component }) {
           <Route path="/checkout" component={Checkout} />
           <Route path="/carrito" component={Carrito} />
           <Route path="/enterokay/"> <Registration /> </Route>
+          <Route exact path="/pagado" component={Pagado} />
         </Switch>
       </BrowserRouter>
       </>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 /* import { Alert } from 'react-bootstrap'; */
 /* import Home from '../home/Home'; */
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import styled from 'styled-components';
 const Register =styled.h2`
 text-align: center;
@@ -31,6 +31,7 @@ border-radius: 6px;
 box-shadow: 0 1px 4px rgba(0,0,0,0.4);
 border: 1px solid #2097;
 `
+{<Redirect to="/"/>}
 function Login() {
 
     const [emaillog, setEmaillog] = useState(" ");

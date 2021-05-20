@@ -17,10 +17,6 @@ app.post('/api/checkout', async (req, res) => {
             currency: 'MXN',
             description: "Compra de Guajolotas",
             payment_method: id,
-            customer: {
-                id: "cu_1IsE6QKWYFkfmdxXVY0ojyib",
-                object: "customer"
-              },
             confirm: true
         })
 
