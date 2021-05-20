@@ -54,22 +54,15 @@ const ProductoId = () => {
     if (localStorage.getItem('storage')) {
         storage = JSON.parse(localStorage.getItem('storage'))
     }
-    let {id} = useParams()  // recibios los parametros de la url 
-    id = parseInt(id)
-    let users
-    let next , before
-    
-    
-    
-    const {state,incremento, decremento} = useCounter(3)
+    const {id} = useParams()  // recibios los parametros de la url     
+    const {state,incremento, decremento} = useCounter(1)
 
      const [pueblo , setPueblo ] = useState([])
      const [puebloBefore , setpuebloBefore ] = useState([])
      const [puebloNext , setpuebloNext ] = useState([])
      const [verItemCart , setItemCart  ] = useState(false)
     const agregarAlCarrito = () => {
-        const producto = pueblo
-        
+            const producto = pueblo
             producto.cantidad = state
         
             /*si el product esta en el carrito guardamos su posicion y el elemento */
@@ -97,7 +90,7 @@ const ProductoId = () => {
          // consumir api
          const obtenerDatos = async () => {
              const data = await fetch(`https://guappjolotas.herokuapp.com/inventario`)
-             users = await data.json()
+             let users = await data.json()
              
               console.log(users)
              console.log(id)

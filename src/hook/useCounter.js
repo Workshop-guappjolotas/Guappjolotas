@@ -9,7 +9,9 @@ export const useCounter = (inicial=1) => {
     }
 
     const decremento =()=>{
-        setstate(state - 1 )
+        if(state > 1){
+            setstate(state - 1 )
+        }
     }
 
     const reset =()=>{

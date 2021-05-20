@@ -39,25 +39,25 @@ text-align: center;
 const Buscar = ({ ocultarCategorias, verCategorias, verCancelar }) => {
 
     const [text, setText] = useState('')
-    const [users, setUsers] = useState([])
+    const [products, setProducts] = useState([])
     useEffect(() => {
         const obtenerDatos = async () => {
             const data = await fetch(`https://guappjolotas.herokuapp.com/inventario`)
-            const users = await data.json()
-            setUsers(users)
+            const products = await data.json()
+            setProducts(products)
             // ERROR
         }
         obtenerDatos()
     }, [])
 
 
-    const filteredUsers = useMemo(() =>
-        users.filter(user => {
+    const filteredProducts = useMemo(() =>
+        products.filter(el => {
             if (text.length > 0)
                 if (
-                    user.tipo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(text.toLowerCase())
+                    el.tipo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(text.toLowerCase())
                 )
-                    return user
+                    return el
         })
         , [text])
     
@@ -85,13 +85,13 @@ const Buscar = ({ ocultarCategorias, verCategorias, verCancelar }) => {
 
             <div>
                 <ContainerCardsStyled>
-                    {filteredUsers.map(user => (
-                        <Link to={`/producto/${user.idArticulo}`} key={user.idArticulo} style={{ textDecoration: 'none' }} >
+                    {filteredProducts.map(el => (
+                        <Link to={`/producto/${el.idArticulo}`} key={el.idArticulo} style={{ textDecoration: 'none' }} >
                             <CardStyled>
-                                <CardFotoStyled><StyledCardImg src={user.foto} alt="" /></CardFotoStyled>
+                                <CardFotoStyled><StyledCardImg src={el.foto} alt="" /></CardFotoStyled>
                                 <CardDescriptionStyled>
-                                    <CardTipoStyled>{user.tipo}</CardTipoStyled>
-                                    <CardPecioStyled>${user.precio} MXN</CardPecioStyled>
+                                    <CardTipoStyled>{el.tipo}</CardTipoStyled>
+                                    <CardPecioStyled>${el.precio} MXN</CardPecioStyled>
                                 </CardDescriptionStyled>
 
                             </CardStyled>
@@ -99,7 +99,7 @@ const Buscar = ({ ocultarCategorias, verCategorias, verCancelar }) => {
 
                     ))}
                     {
-                    filteredUsers.length == 0 && verCancelar == true && <ResultadoStyled >
+                    filteredProducts.length == 0 && verCancelar == true && <ResultadoStyled >
                         <i className="fas fa-search" style={{fontSize:'150px'}}></i>
                         <p>{ text.length > 0?'No hay resultados':'Realiza una búsqueda'}</p>
                         </ResultadoStyled>
