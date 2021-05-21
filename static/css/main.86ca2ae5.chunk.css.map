@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,SACI,YACJ,CACC,KACG,kBAAmB,CACnB,iBACJ","file":"main.86ca2ae5.chunk.css","sourcesContent":[".ocultar{\r\n    display: none;     \r\n}\r\n body{\r\n    background: #F2F2F2;\r\n    font-family: Inter;    \r\n}\r\n"]}
