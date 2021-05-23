@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
-import {
-    CardStyled, CardFotoStyled, StyledCardImg, CardDescriptionStyled,
-    CardTipoStyled, CardPecioStyled, ContainerCardsStyled
-} from '../styled/ElementStyled'
+import { ContainerCardsStyled} from '../styled/ElementStyled'
+import CardProduct from '../pages/CardProduct';
+import { useFetch } from '../hook/useFetch';
 
 const ContainerBuscar = styled.div`
 display:flex;
@@ -39,31 +37,22 @@ text-align: center;
 const Buscar = ({ ocultarCategorias, verCategorias, verCancelar }) => {
 
     const [text, setText] = useState('')
-    const [products, setProducts] = useState([])
-    useEffect(() => {
-        const obtenerDatos = async () => {
-            const data = await fetch(`https://guappjolotas.herokuapp.com/inventario`)
-            const products = await data.json()
-            setProducts(products)
-            // ERROR
-        }
-        obtenerDatos()
-    }, [])
-
-
-    const filteredProducts = useMemo(() =>
-        products.filter(el => {
+    const {data}= useFetch(`https://guappjolotas.herokuapp.com/inventario`) 
+    const products =  data  ? data:[]  
+   
+   const filteredProducts = useMemo(() =>
+    products.filter(el => {
             if (text.length > 0)
                 if (
                     el.tipo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").includes(text.toLowerCase())
-                )
-                    return el
+                )  return el 
         })
-        , [text])
-    
+        
+        , [text])      
     return (
         <>
-            <ContainerBuscar>
+      
+           <ContainerBuscar>
                 <BarraBuscar >
                     <i className="fas fa-search"></i>
                     <Busqueda
@@ -81,30 +70,20 @@ const Buscar = ({ ocultarCategorias, verCategorias, verCancelar }) => {
                 {
                 verCancelar && <p onClick={() => verCategorias()}> Cancelar </p>
                 }
-            </ContainerBuscar>
+            </ContainerBuscar> 
 
             <div>
-                <ContainerCardsStyled>
-                    {filteredProducts.map(el => (
-                        <Link to={`/producto/${el.idArticulo}`} key={el.idArticulo} style={{ textDecoration: 'none' }} >
-                            <CardStyled>
-                                <CardFotoStyled><StyledCardImg src={el.foto} alt="" /></CardFotoStyled>
-                                <CardDescriptionStyled>
-                                    <CardTipoStyled>{el.tipo}</CardTipoStyled>
-                                    <CardPecioStyled>${el.precio} MXN</CardPecioStyled>
-                                </CardDescriptionStyled>
-
-                            </CardStyled>
-                        </Link>
-
+               <ContainerCardsStyled>
+                    {filteredProducts.map(item => (
+                        <CardProduct item={item} key={item.idArticulo} />
                     ))}
                     {
-                    filteredProducts.length == 0 && verCancelar == true && <ResultadoStyled >
+                    filteredProducts.length === 0 && verCancelar && <ResultadoStyled >
                         <i className="fas fa-search" style={{fontSize:'150px'}}></i>
                         <p>{ text.length > 0?'No hay resultados':'Realiza una búsqueda'}</p>
                         </ResultadoStyled>
                         }
-                </ContainerCardsStyled>
+                </ContainerCardsStyled> 
             </div>
         </>
     )

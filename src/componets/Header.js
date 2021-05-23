@@ -6,6 +6,7 @@ const Navbar = styled.div`
     text-align: center;
     justify-content: space-between;
     display: flex;
+    padding: 10px 10px 20px 10px;
 `;
 const ImgLogo = styled.img`
 width: 60px;    
@@ -18,22 +19,30 @@ font-size: 40px;
 export default class Header extends Component {
     constructor(props){
         super()
-        this.state ={
-            usurActivo: false
-        }
     }
 
     render() {
         return (
             <>
-            
+           
             <Navbar>
-                <div><ImgLogo src="https://i.ibb.co/vHRHSrx/Ilustracio-n-sin-ti-tulo-66-1.png" alt="" /></div>
-                <ImgCarrito><i className="fas fa-cart-plus"></i>
-                <Link to={'/enterokay'} >
-                    <i className="fas fa-user" style={{marginLeft:'10px', color: this.state.usurActivo ? 'blue':'coral'}}></i>
+                {
+                    this.props.cambiarIcono?
+                    <Link to={'/'} className="btn btn-danger" style={{fontSize:'40px'}}> <i className="fas fa-arrow-left" ></i></Link>
+                    :
+                    <div><ImgLogo src="https://i.ibb.co/vHRHSrx/Ilustracio-n-sin-ti-tulo-66-1.png" alt="" /></div>
+                
+                }
+               <ImgCarrito>
+               <Link to={'/cart'} >
+                <i className= "fa fa-shopping-cart" style={{color:'coral'}}></i>
+                </Link>
+                <Link to={'/login'} >
+                    <i className= { this.props.logeado ? "fa fa-user-check":"fas fa-user"} 
+                    style={{marginLeft:'10px', color:  this.props.logeado ?  'blue':'#234'}}></i>
                 </Link>
                 </ImgCarrito>
+                     
             </Navbar>
             
             </>

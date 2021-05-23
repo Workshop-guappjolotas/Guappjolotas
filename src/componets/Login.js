@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 /* import { Alert } from 'react-bootstrap'; */
 /* import Home from '../home/Home'; */
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 import styled from 'styled-components';
 const Register =styled.h2`
 text-align: center;
@@ -31,38 +31,48 @@ border-radius: 6px;
 box-shadow: 0 1px 4px rgba(0,0,0,0.4);
 border: 1px solid #2097;
 `
-function Login() {
+function Login({estasLogeado}) {
 
     const [emaillog, setEmaillog] = useState(" ");
     const [passwordlog, setPasswordlog] = useState(" ");
-
     const [flag, setFlag] = useState(false);
-
-    const [home, setHome] = useState(true);
-
+    const [home, setHome] = useState(false); // true
+    
+    let history = useHistory();
 
     function handleLogin(e) {
+       
         e.preventDefault();
-        let pass = localStorage.getItem('hardikSubmissionPassword').replace(/"/g, "");
-        let mail = localStorage.getItem('hardikSubmissionEmail').replace(/"/g, "");
+        let user, contraseña,correo;
+      /*   let pass = localStorage.getItem('hardikSubmissionPassword').replace(/"/g, "");
+        let mail = localStorage.getItem('hardikSubmissionEmail').replace(/"/g, ""); */
         // .replace(/"/g,"") elimina comillas dobles de la cadena
-
-        if (!emaillog || !passwordlog) {
+        fetch("https://guappjolotas.herokuapp.com/usuarios")
+        .then(resp=>resp.json())
+        .then(data=>{
+         user = data.filter(el => el.correo === emaillog && el.contraseña === passwordlog );  
+         
+         if(user.length>0){
+             contraseña = user[0].contraseña
+             correo= user[0].correo
+         }
+    
+         if (!emaillog || !passwordlog) {
             setFlag(true);
-            console.log("EMPTY");
-        } else if ((passwordlog !== pass) || (emaillog !== mail)) {
+        } else if ((passwordlog !== contraseña) || (emaillog !== correo)) {
             setFlag(true);
         } else {
+            estasLogeado(true)
             setHome(!home);
             setFlag(false);
-            window.location = '/';
-        }
+            history.push('/')
+        } 
+    })
     }
-
 
     return (
         <div>
-            {home && <Formulario onSubmit={handleLogin}>
+            <Formulario onSubmit={handleLogin}>
                 <Register>LogIn</Register>
                 <FormGroup>
                     <Label>Email</Label>
@@ -78,27 +88,20 @@ function Login() {
                 <button type="submit" style={{
                         width:'100%',
                         padding: '10px',
-                        boxShadow:'0 1px 4px rgba(0,0,0,0.4)'                    
+                        background: '#fff',
+                        border: 'none',
+                        borderRadius: '10px',  
+                        boxShadow:'0 1px 4px rgba(0,0,0,0.4)'               
                       }}>Login</button>
-                <Link to={'/'}> 
-                <button
+              
+              <div style={{display:'flex',display: 'flex',alignItems:'center',gap: '10px'}}>
+                     <p> No tienes una cuenta? </p> <Link to={'/enterokay'}> Inscribirse</Link>
+              </div>
 
-                 style={{
-                     width:'100%',
-                     border:'0',
-                     marginTop: '10px',
-                     padding:'8px' 
-                                      
-                    }}>
-                          Salir
-                    </button>
-                    </Link>
                 </FormGroup>
                 {flag && <p>Complete la información correcta, de lo contrario, siga intentando.</p>}
             </Formulario>
                 
-            }
-
         </div>
     )
 }

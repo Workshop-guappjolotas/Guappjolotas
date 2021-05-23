@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Buscar from '../pages/Buscar'
-import Categorias from '../pages/Categorias'
+import Buscar from './Buscar'
+import Categorias from './Categorias'
 import Producto from '../pages/Producto'
 
 export default class Main extends Component {
@@ -25,7 +25,6 @@ export default class Main extends Component {
     render() {
         return (
             <>
-            
             {!this.state.verBusqueda && <Producto/> }
                <Buscar 
                ocultarCategorias = {this.ocultarCategorias} 

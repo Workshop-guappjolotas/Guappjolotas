@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Login from './Login';
 import styled from 'styled-components';
+import { Link ,useHistory } from "react-router-dom";
 
 const Register =styled.h2`
 text-align: center;
@@ -8,7 +8,7 @@ margin: 0;
 font-weight: 900;
     font-size: 35px;
 ` 
-const Formulario = styled.form`
+const Formulario = styled.div`
 border-radius: 10px;
    margin: auto;
     max-width: 300px;
@@ -39,34 +39,48 @@ function Registration() {
 
     const [flag, setFlag] = useState(false);
     const [login, setLogin] = useState(true);
-
+    let history = useHistory();
     // on form submit...
-    function handleFormSubmit(e) {
+    async function handleFormSubmit (e) {
         e.preventDefault();
-
+        let id = + new Date() + '-' + Math.floor(Math.random() * 1000);
+        
         if (!name || !email || !password ) {
             setFlag(true);
 
         } else {
             setFlag(false);
-            localStorage.setItem("hardikSubmissionEmail", JSON.stringify(email));
-            localStorage.setItem("hardikSubmissionPassword", JSON.stringify(password));
+    /*         localStorage.setItem("hardikSubmissionEmail", JSON.stringify(email));
+            localStorage.setItem("hardikSubmissionPassword", JSON.stringify(password)); */
         
+            const rawResponse = await fetch('https://guappjolotas.herokuapp.com/usuarios', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ 
+             "id": id,
+              "nombre": name,
+              "apellido": "",
+              "saldo": 280,
+              "contraseña": password,
+              "correo": email})
+            });
+            const content = await rawResponse.json();
+            
+           // console.log(content);
             setLogin(!login)
-            console.log(login)
-
+            history.push('/login')
+ 
         }
 
     }
 
-    //Directamente a la página de inicio de sesión
-    function handleClick() {
-        setLogin(!login)
-    }
-
     return (
         <>
-            { login ? <Formulario onSubmit={handleFormSubmit}>
+            <form  onSubmit={handleFormSubmit} >
+            <Formulario>
                 <Register>Register</Register>
 
                 <FormGroup>
@@ -79,30 +93,34 @@ function Registration() {
                     <Input type="email" className="form-control" placeholder="Enter email" onChange={(event) => setEmail(event.target.value)} />
                 </FormGroup>
 
+                
                 <FormGroup>
                     <Label>Password</Label>
-                    <Input type="password" className="form-control" placeholder="Enter password" onChange={(event) => setPassword(event.target.value)} />
+                    <Input type="password"  placeholder="Enter password" onChange={(event) => setPassword(event.target.value)} />
                 </FormGroup>
-
                  <FormGroup>
                     <button  type="submit" style={{
                         width:'100%',
                         padding: '10px',
-                        boxShadow:'0 1px 4px rgba(0,0,0,0.4)'                    
+                        background: '#fff',
+                        border: 'none',
+                        borderRadius: '10px',  
+                        boxShadow:'0 1px 4px rgba(0,0,0,0.4)'                 
                       }}>
                     Register
                     </button>
                  </FormGroup>
                
-                <p className="forgot-password text-right">
-                Ya estas registrado <a href="#" onClick={handleClick} >iniciar sesión</a>
-                </p>
-               
+            <div style={{display:'flex',alignItems:'center',gap: '10px'}}>
+           
+              <p> ¿Ya tienes una cuenta?</p> <Link to={'/login'}> Iniciar sesión</Link>
+              </div>
+
                 {
                 flag && <p style={{ color: 'red'}}>Lo tengo, tienes prisa! ¡Pero cada campo es importante!</p>
                 }
 
-            </Formulario> : <Login />}
+            </Formulario></form>
         </>
     )
 }

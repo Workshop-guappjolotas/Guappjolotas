@@ -12,11 +12,8 @@ export default class Home extends Component {
     render() {
         return (
             <ContainerMain>
-                 <article>
-
-</article>
-            <Header/>
-            <Main/>
+               <Header  logeado ={this.props.logeado}/> 
+                <Main/>
    </ContainerMain> 
         )
     }

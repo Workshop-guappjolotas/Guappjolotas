@@ -1,3 +1,25 @@
  body{
     background: #F2F2F2;
 }
+.addToCart{
+    background-color: #fa4a0c;
+color: white;
+margin:auto;
+width: 312px;
+height: 69px;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow: 1px 1px 5px 1px #000;
+border-radius: 40px;
+
+}
+.addToCart:hover{
+        background-color: #fa0c0c;
+        cursor: pointer;
+ }
+
+ button:hover{
+    background-color: #fa0c0c;
+    cursor: pointer;
+ }
