@@ -6,7 +6,7 @@ La famosa empresa GUAJO-GEEK, exitosa en ventas de Guajolotas y Tamales a travé
 Nuestras GUAPPJOLOTAS estan disponible para que las disfrutes cada día desde la comodidad de tu hogar.
 
 Puedes acceder a la aplicacion desde este enlace:
-[https://guappjolotas-yadier2.vercel.app/](https://guappjolotas-yadier2.vercel.app/).
+[https://guappjolotas-zsuce7k7x-yadier2.vercel.app/](https://guappjolotas-zsuce7k7x-yadier2.vercel.app/).
 
 ## Descripcion
 
