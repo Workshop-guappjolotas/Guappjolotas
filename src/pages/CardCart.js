@@ -6,7 +6,6 @@ import {
     , CardTipoStyled, CardPecioStyled, CardStyled, CountStyled
 } from '../styled/ElementStyled'
 
-
 const AmountContainerStyled = styled.div`
     background: rgba(0, 0, 0, .5);
     display: flex;

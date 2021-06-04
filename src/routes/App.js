@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from '../containers/Home';
-import Registration from '../componets/Registration';
+import Registration from '../components/Registration';
 import Loading from '../pages/Loading'
-import Checkout from '../componets/Checkout';
-import Carrito from '../componets/Carrito';
-import ProductoId from '../componets/ProductoId';
-import Login from '../componets/Login';
+import Checkout from '../components/Checkout';
+import Carrito from '../components/Carrito';
+import ProductoId from '../components/ProductoId';
+import Login from '../components/Login';
 
 function App() {
 const [state, setstate] = useState(true)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'; 
-import Header from '../componets/Header';
-import Main from '../componets/Main';
+import Header from '../components/Header';
+import Main from '../components/Main';
 
 //INICIO DE NUESTROS ESTILOS CONSTYLED-COMPONENTS
 const ContainerMain = styled.div`
