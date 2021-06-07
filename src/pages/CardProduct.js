@@ -8,9 +8,11 @@ import {
 
 
 const CardProduct = ({ item,active}) => {
+    
     return (
 
         <Link to={`/producto/${item.idArticulo}`} style={{ textDecoration: 'none'}}>
+        {console.log("Hola")}
             <CardStyled>
                 <CardFotoStyled><StyledCardImg src={item.foto} alt="" /></CardFotoStyled>
                 <CardDescriptionStyled>

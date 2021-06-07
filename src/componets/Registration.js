@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import { Link ,useHistory } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { startRegisterWithEmailPasswordName, startGoogleLogin } from "../actions/auth";
 const Register =styled.h2`
 text-align: center;
 margin: 0;
@@ -32,7 +33,7 @@ border: 1px solid #2097;
 `
 
 function Registration() {
-
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -40,8 +41,14 @@ function Registration() {
     const [flag, setFlag] = useState(false);
     const [login, setLogin] = useState(true);
     let history = useHistory();
+    
+    const handleGoogle =()=>{
+        dispatch(startGoogleLogin())
+    }
+    
     // on form submit...
     async function handleFormSubmit (e) {
+
         e.preventDefault();
         let id = + new Date() + '-' + Math.floor(Math.random() * 1000);
         
@@ -53,7 +60,7 @@ function Registration() {
     /*         localStorage.setItem("hardikSubmissionEmail", JSON.stringify(email));
             localStorage.setItem("hardikSubmissionPassword", JSON.stringify(password)); */
         
-            const rawResponse = await fetch('https://guappjolotas.herokuapp.com/usuarios', {
+          /*   const rawResponse = await fetch('https://guappjolotas.herokuapp.com/usuarios', {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -67,9 +74,12 @@ function Registration() {
               "contraseña": password,
               "correo": email})
             });
-            const content = await rawResponse.json();
+            const content = await rawResponse.json(); */
             
+
+            dispatch(startRegisterWithEmailPasswordName(email, password, name));
            // console.log(content);
+           
             setLogin(!login)
             history.push('/login')
  
@@ -110,7 +120,7 @@ function Registration() {
                     Register
                     </button>
                  </FormGroup>
-               
+               <button onClick={handleGoogle}>Iniciar con Google</button>
             <div style={{display:'flex',alignItems:'center',gap: '10px'}}>
            
               <p> ¿Ya tienes una cuenta?</p> <Link to={'/login'}> Iniciar sesión</Link>

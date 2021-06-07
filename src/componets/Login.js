@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 /* import { Alert } from 'react-bootstrap'; */
 /* import Home from '../home/Home'; */
 import { Link ,useHistory} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {startLoginEmailPassword, startGoogleLogin } from "../actions/auth";
+
 import styled from 'styled-components';
 const Register =styled.h2`
 text-align: center;
@@ -32,6 +35,9 @@ box-shadow: 0 1px 4px rgba(0,0,0,0.4);
 border: 1px solid #2097;
 `
 function Login({estasLogeado}) {
+    const dispatch = useDispatch();
+    
+  const {loading} = useSelector(state => state.ui)
 
     const [emaillog, setEmaillog] = useState(" ");
     const [passwordlog, setPasswordlog] = useState(" ");
@@ -47,7 +53,9 @@ function Login({estasLogeado}) {
       /*   let pass = localStorage.getItem('hardikSubmissionPassword').replace(/"/g, "");
         let mail = localStorage.getItem('hardikSubmissionEmail').replace(/"/g, ""); */
         // .replace(/"/g,"") elimina comillas dobles de la cadena
-        fetch("https://guappjolotas.herokuapp.com/usuarios")
+        dispatch(startLoginEmailPassword(emaillog, passwordlog));
+
+      /*   fetch("https://guappjolotas.herokuapp.com/usuarios")
         .then(resp=>resp.json())
         .then(data=>{
          user = data.filter(el => el.correo === emaillog && el.contraseña === passwordlog );  
@@ -67,7 +75,7 @@ function Login({estasLogeado}) {
             setFlag(false);
             history.push('/')
         } 
-    })
+    }) */
     }
 
     return (
@@ -85,7 +93,7 @@ function Login({estasLogeado}) {
                 </FormGroup>
                
                 <FormGroup>
-                <button type="submit" style={{
+                <button  disabled={loading} type="submit" style={{
                         width:'100%',
                         padding: '10px',
                         background: '#fff',

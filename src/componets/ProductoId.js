@@ -4,65 +4,75 @@ import {useHistory} from "react-router-dom";
 import Header from './Header';
 import { useCounter } from '../hook/useCounter'
 import VerPoductId from '../pages/VerPoductId';
-
-
+import { useDispatch, useSelector } from 'react-redux';
 const ProductoId = ({logeado}) => {
+    
     let history = useHistory();
     let carrito = []
+
     if (localStorage.getItem('carrito')) {
         carrito = JSON.parse(localStorage.getItem('carrito'))
     }
+
+    const { task } = useSelector(state => state.task)
+    
+    console.log("PIFDFFF", task);
+
     let { id } = useParams()
     id = parseInt(id)
-    let articulos;
-    let [products, setProducts] = useState([])
+   // let articulos;
+
+    let [products1, setProducts] = useState([])
     const [articulo, setArticulo] = useState([])
     const [articuloBefore, setArticuloBefore] = useState([])
     const [articuloNext, setArticuloNext] = useState([])
     const { state, incremento, decremento } = useCounter(1)
     const [sabor, setSabor] = useState([])
-    const [categoria, setCategoria] = useState([])
+   const [categoria, setCategoria] = useState([])
     const [checkboxes, setCheckboxes] = useState([])
   
-    useEffect(() => {
-        const obtenerDatos = async () => {
-            const data = await fetch(`https://guappjolotas.herokuapp.com/inventario`)
-            products = await data.json()
-            setProducts(products)
-            let index = products.findIndex((element) => element.idArticulo === id)
-            let categoria = products[index].categoria
-            articulos = products.filter(el => el.categoria === categoria);
-            let arrayIndex = articulos.findIndex((element) => element.idArticulo === id)
+   useEffect(() => {
+       
+        const obtenerDatos =  () => {
+            
+    let index = task.findIndex((element) => element.idArticulo === id)
+    let categorias = task[index]?.categoria
+   console.log(categorias);
+    
+   let articulos = task.filter(el => el.categoria === categorias);
+   console.log(articulos);
+   let arrayIndex = articulos.findIndex((element) => element.idArticulo === id)
+   console.log(arrayIndex);
 
-            setSabor(articulos)
-            setCategoria(categoria === 'Bebida' ? 'Guajolota' : 'Bebida')
+   setSabor(articulos)
+   setCategoria(categoria === 'Bebida' ? 'Guajolota' : 'Bebida')
 
-            articulos.forEach(element => {
-                if (element.idArticulo === id) {
-                    setArticulo(element)
-                }
-                if (arrayIndex > 0 && arrayIndex < articulos.length - 1) {
-                    setArticuloBefore(articulos[arrayIndex - 1].foto)
-                    setArticuloNext(articulos[arrayIndex + 1].foto)
+   articulos.forEach(element => {
+    if (element.idArticulo === id) {
+        setArticulo(element)
+    }
+    if (arrayIndex > 0 && arrayIndex < articulos.length - 1) {
+        setArticuloBefore(articulos[arrayIndex - 1].foto)
+        setArticuloNext(articulos[arrayIndex + 1].foto)
 
-                } else {
+    } else {
 
-                    if (arrayIndex === 0) {
+        if (arrayIndex === 0) {
 
-                        setArticuloBefore(null)
-                        setArticuloNext(articulos[arrayIndex + 1].foto)
-                    }
-                }
-                if (arrayIndex === articulos.length - 1) {
-                    setArticuloBefore(articulos[arrayIndex - 1].foto)
-                    setArticuloNext(null)
-                }
-            });
+            setArticuloBefore(null)
+            setArticuloNext(articulos[arrayIndex + 1].foto)
         }
-
+    }
+    if (arrayIndex === articulos.length - 1) {
+        setArticuloBefore(articulos[arrayIndex - 1].foto)
+        setArticuloNext(null)
+    }
+})
+        }
         obtenerDatos()
 
-    }, [id])
+    }, [id, task])
+     
     
     const onCheck = (value, item) => {
         let data = checkboxes
@@ -107,20 +117,20 @@ const ProductoId = ({logeado}) => {
             }
         });
         //Agregando al carrito modificando cantidad
-        if (elemento) {
+         if (elemento) {
             carrito[indice].cantidad = producto.cantidad
             localStorage.setItem('carrito', JSON.stringify(carrito))
         } else {
             carrito.push(producto)
             localStorage.setItem('carrito', JSON.stringify(carrito))
-        }
+        } 
     }
 
     return (
         <>
-            <Header  cambiarIcono={true} logeado ={logeado}/> 
+          <Header  cambiarIcono={true} logeado ={logeado}/> 
             <VerPoductId
-                products={products}
+                products={task}
                 articuloBefore={articuloBefore}
                 articulo={articulo}
                 articuloNext={articuloNext}
@@ -133,7 +143,7 @@ const ProductoId = ({logeado}) => {
                 onCheck={onCheck}
                 total={total}
                 addToCart={addToCart}
-            />
+            /> 
 
         </>
     )

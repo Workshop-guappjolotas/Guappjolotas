@@ -5,7 +5,7 @@ import {
     CardFotoStyled, StyledCardImg, CardDescriptionStyled
     , CardTipoStyled, CardPecioStyled, CardStyled, CountStyled
 } from '../styled/ElementStyled'
-
+import { useDispatch, useSelector } from 'react-redux';
 
 const AmountContainerStyled = styled.div`
     background: rgba(0, 0, 0, .5);
@@ -33,8 +33,12 @@ const AmountStyled = styled.div`
 
 const CardCart = ({ modificarEStado, estado, articulos, indice, decremento, state, incremento,
      modificarCantidad, pagarBuys, eliminar, logeado, verificaTuCuenta, cuenta }) => {
+
+        const { task } = useSelector(state => state.task)
+
     return (
         <div style={{ textAlign: 'center' }}>
+            
             <Link to={'/'} className="btn btn-danger" style={{ fontSize: '40px' }}> <i className="fas fa-arrow-left" ></i></Link>
             <h2 style={{ textAlign: 'center' }}>Carrito</h2>
          

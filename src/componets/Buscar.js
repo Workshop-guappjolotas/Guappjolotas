@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ContainerCardsStyled} from '../styled/ElementStyled'
 import CardProduct from '../pages/CardProduct';
 import { useFetch } from '../hook/useFetch';
-
+import { useDispatch, useSelector } from 'react-redux';
 const ContainerBuscar = styled.div`
 display:flex;
 gap: 10px;
@@ -37,8 +37,9 @@ text-align: center;
 const Buscar = ({ ocultarCategorias, verCategorias, verCancelar }) => {
 
     const [text, setText] = useState('')
-    const {data}= useFetch(`https://guappjolotas.herokuapp.com/inventario`) 
-    const products =  data  ? data:[]  
+   // const {data}= useFetch(`https://guappjolotas.herokuapp.com/inventario`) 
+    const { task } = useSelector(state => state.task)
+    const products =  task  ? task:[]  
    
    const filteredProducts = useMemo(() =>
     products.filter(el => {
@@ -51,7 +52,7 @@ const Buscar = ({ ocultarCategorias, verCategorias, verCancelar }) => {
         , [text])      
     return (
         <>
-      
+
            <ContainerBuscar>
                 <BarraBuscar >
                     <i className="fas fa-search"></i>
